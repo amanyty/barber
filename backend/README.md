@@ -51,6 +51,9 @@ This is a Node.js/Express backend for the Barber Shop management system, using P
 ### Barbers
 - `GET /api/barbers` - List all barbers.
 
+### Enquiries
+- `POST /api/enquiries` - { name, email, subject, message }
+
 ### Images
 - `POST /api/upload` - Upload image (form-data: 'image').
 
