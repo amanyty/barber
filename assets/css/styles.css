@@ -95,43 +95,51 @@ h4 {
 /* Buttons */
 .btn {
     display: inline-block;
-    padding: 0.8rem 2rem;
+    padding: 0.8rem 2.2rem;
     font-family: var(--font-body);
     font-weight: 500;
     text-transform: uppercase;
-    letter-spacing: 1px;
+    letter-spacing: 1.5px;
     border-radius: var(--border-radius);
     cursor: pointer;
-    border: none;
+    border: 1px solid transparent;
     transition: var(--transition);
-    font-size: 0.9rem;
+    font-size: 0.85rem;
 }
 
 .btn--primary {
     background-color: var(--color-primary);
     color: var(--color-white);
+    border-color: var(--color-primary);
+    box-shadow: 0 4px 15px rgba(215, 38, 56, 0.3);
 }
 
 .btn--primary:hover {
-    background-color: var(--color-primary-dark);
+    background-color: transparent;
+    color: var(--color-primary);
     transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(215, 38, 56, 0.4);
 }
 
 .btn--secondary {
     background-color: transparent;
-    border: 2px solid var(--color-white);
-    color: var(--color-white);
+    border: 1px solid var(--color-gold);
+    color: var(--color-gold);
     margin-left: var(--spacing-sm);
 }
 
 .btn--secondary:hover {
-    background-color: var(--color-white);
-    color: var(--color-bg-dark);
+    background-color: var(--color-gold);
+    color: #000;
+    box-shadow: var(--shadow-gold);
 }
 
 .btn--whatsapp {
     background-color: #25D366;
     color: var(--color-white);
+    border-radius: 50px;
+    /* Pillow shape for social/chat buttons */
+    padding: 0.8rem 1.5rem;
 }
 
 .btn--full {
@@ -464,6 +472,83 @@ textarea:focus {
     font-size: 0.8rem;
 }
 
+/* Instagram Section */
+.instagram {
+    position: relative;
+    overflow: hidden;
+    padding: var(--spacing-xl) 0;
+    background: linear-gradient(to top, var(--color-bg-dark), rgba(20, 20, 20, 0.5));
+}
+
+.instagram__container {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: var(--spacing-lg);
+    align-items: start;
+}
+
+.instagram__embed {
+    width: 100%;
+    margin: 0 auto;
+    display: flex;
+    justify-content: center;
+}
+
+/* Placeholder for the iframe/blockquote */
+.instagram-media {
+    border-radius: var(--border-radius) !important;
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.6) !important;
+    max-width: 540px !important;
+    min-width: 326px !important;
+    width: 100% !important;
+    border: 1px solid rgba(255, 255, 255, 0.1) !important;
+}
+
+.instagram__feed {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    /* 2 cols on mobile */
+    gap: 10px;
+}
+
+.instagram__post {
+    position: relative;
+    aspect-ratio: 1/1;
+    overflow: hidden;
+    border-radius: var(--border-radius);
+    cursor: pointer;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.instagram__post img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.5s ease;
+}
+
+.instagram__post:hover img {
+    transform: scale(1.1);
+}
+
+.instagram__post::after {
+    content: '❤️';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%) scale(0);
+    font-size: 2rem;
+    transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    opacity: 0;
+    z-index: 2;
+    text-shadow: 0 5px 15px rgba(0, 0, 0, 0.5);
+}
+
+.instagram__post:hover::after {
+    transform: translate(-50%, -50%) scale(1);
+    opacity: 1;
+}
+
 /* Media Queries (Desktop) */
 @media (min-width: 768px) {
     .nav-toggle {
@@ -499,6 +584,17 @@ textarea:focus {
 
     .testimonials__grid {
         grid-template-columns: repeat(3, 1fr);
+    }
+
+    .instagram__container {
+        grid-template-columns: 1fr 1.5fr;
+        /* Embed left, Grid right */
+        align-items: center;
+    }
+
+    .instagram__feed {
+        grid-template-columns: repeat(3, 1fr);
+        /* 3 cols on desktop */
     }
 
     .section__title {
