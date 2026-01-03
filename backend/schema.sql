@@ -49,8 +49,21 @@ CREATE TABLE images (
     uploaded_at TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP
 );
 
+-- Enquiries Table
+-- Stores contact form submissions
+CREATE TABLE enquiries (
+    id SERIAL PRIMARY KEY,
+    name VARCHAR(100) NOT NULL,
+    email VARCHAR(150) NOT NULL,
+    subject VARCHAR(200),
+    message TEXT NOT NULL,
+    status VARCHAR(20) CHECK (status IN ('new', 'read', 'replied')) DEFAULT 'new',
+    created_at TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP
+);
+
 -- Indexes for performance optimization
 CREATE INDEX idx_appointments_time ON appointments(appointment_time);
 CREATE INDEX idx_appointments_customer ON appointments(customer_id);
 CREATE INDEX idx_appointments_barber ON appointments(barber_id);
 CREATE INDEX idx_users_email ON users(email);
+CREATE INDEX idx_enquiries_status ON enquiries(status);

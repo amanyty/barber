@@ -124,6 +124,22 @@ app.get('/api/barbers', async (req, res) => {
     }
 });
 
+// -- Enquiry Routes --
+
+app.post('/api/enquiries', async (req, res) => {
+    const { name, email, subject, message } = req.body;
+    try {
+        const newEnquiry = await pool.query(
+            'INSERT INTO enquiries (name, email, subject, message) VALUES ($1, $2, $3, $4) RETURNING *',
+            [name, email, subject, message]
+        );
+        res.status(201).json(newEnquiry.rows[0]);
+    } catch (err) {
+        console.error(err);
+        res.status(500).json({ error: 'Server error' });
+    }
+});
+
 // -- Image Upload Route --
 
 const storage = multer.diskStorage({
