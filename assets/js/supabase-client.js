@@ -51,9 +51,10 @@ window.AppBackend = {
 
     async submitEnquiry(enquiryData) {
         if (!supabase) throw new Error('Backend disconnected');
-        const { data, error } = await supabase.from('enquiries').insert([enquiryData]).select();
+        // Removed .select() to avoid RLS "Policy violates row security" for anon inserts
+        const { error } = await supabase.from('enquiries').insert([enquiryData]);
         if (error) throw error;
-        return data;
+        return { success: true };
     },
 
     // --- Gallery ---

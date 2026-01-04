@@ -28,7 +28,8 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     // --- Dynamic Gallery Loading ---
-    loadHomeGallery();
+    // --- Dynamic Gallery Loading ---
+    // loadHomeGallery(); // Disabled to prioritize static real images until DB is populated
 
     // --- Form Handling (Connected to Supabase) ---
     const enquiryForm = document.getElementById('enquiryForm');

@@ -225,7 +225,33 @@
 
             window.AppBackend.uploadImage = async function (file) {
                 if (!supabase) throw new Error('Backend Disconnected');
-                throw new Error('Upload requires live backend connection');
+
+                const fileName = `${Date.now()}_${file.name.replace(/\s/g, '_')}`;
+
+                // 1. Upload to Supabase Storage
+                const { error: uploadError } = await supabase.storage
+                    .from('gallery-images')
+                    .upload(fileName, file);
+                if (uploadError) throw uploadError;
+
+                // 2. Get Public URL
+                const { data: { publicUrl } } = supabase.storage
+                    .from('gallery-images')
+                    .getPublicUrl(fileName);
+
+                // 3. Save Metadata to DB
+                const { data, error: dbError } = await supabase
+                    .from('customer_images')
+                    .insert([{
+                        image_url: publicUrl,
+                        caption: file.name,
+                        image_type: 'portfolio',
+                        public_visible: true
+                    }])
+                    .select();
+
+                if (dbError) throw dbError;
+                return data;
             };
 
             console.log('VortexDB: AppBackend is ready.');
